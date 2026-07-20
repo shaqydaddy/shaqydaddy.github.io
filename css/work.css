@@ -1,0 +1,165 @@
+.work-header {
+  padding-block: var(--space-xl) var(--space-md);
+  max-width: 720px;
+}
+.work-header h1 { font-size: clamp(34px, 5vw, 52px); margin-top: var(--space-sm); }
+.work-header p { color: var(--ink-soft); margin-top: var(--space-md); font-size: 18px; }
+
+.work-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+}
+.filter-btn {
+  border: 0.5px solid var(--line-strong);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  transition: all var(--dur) var(--ease);
+}
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg) var(--space-md);
+}
+@media (max-width: 720px) {
+  .work-grid { grid-template-columns: 1fr; }
+}
+
+.work-item {
+  border-bottom: 0.5px solid var(--line);
+  padding-bottom: var(--space-lg);
+  perspective: 1200px;
+}
+.work-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+  border: 0.5px solid var(--line);
+  transform-style: preserve-3d;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+  will-change: transform;
+}
+.work-media video,
+.work-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease), filter 0.6s var(--ease);
+}
+
+/* Fancy hover: subtle tilt + lift + glow + slow zoom on the media,
+   plus a diagonal light sweep across the surface. */
+.work-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.16) 36%,
+    rgba(255, 255, 255, 0.32) 42%,
+    rgba(255, 255, 255, 0.16) 48%,
+    transparent 64%
+  );
+  background-size: 250% 250%;
+  background-position: 120% 0%;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+.work-item:hover .work-media,
+.work-item:focus-within .work-media {
+  transform: translateY(-6px) rotateX(4deg) rotateY(-4deg) scale(1.015);
+  box-shadow: 0 24px 48px -12px rgba(9, 16, 22, 0.35), 0 0 0 1px var(--accent);
+  border-color: var(--accent);
+}
+.work-item:hover .work-media video,
+.work-item:hover .work-media img,
+.work-item:focus-within .work-media video,
+.work-item:focus-within .work-media img {
+  transform: scale(1.08);
+  filter: saturate(1.12) contrast(1.03);
+}
+.work-item:hover .work-media::before,
+.work-item:focus-within .work-media::before {
+  opacity: 1;
+  background-position: -20% -20%;
+  transition: background-position 0.9s var(--ease), opacity 0.4s var(--ease);
+}
+
+/* Title + tags nudge in, giving the whole card a sense of depth */
+.work-item h3,
+.work-item .work-tags {
+  transition: transform 0.4s var(--ease), color 0.4s var(--ease);
+}
+.work-item:hover h3,
+.work-item:focus-within h3 {
+  transform: translateX(4px);
+  color: var(--accent);
+}
+.work-item:hover .work-tags,
+.work-item:focus-within .work-tags {
+  transform: translateX(4px);
+}
+.work-tags span { transition: border-color 0.4s var(--ease), color 0.4s var(--ease); }
+.work-item:hover .work-tags span,
+.work-item:focus-within .work-tags span {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-media,
+  .work-media video,
+  .work-media img,
+  .work-item h3,
+  .work-item .work-tags,
+  .work-tags span {
+    transition: none !important;
+  }
+  .work-item:hover .work-media,
+  .work-item:focus-within .work-media {
+    transform: none;
+  }
+}
+.work-tools {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+.work-tools span:first-child { color: var(--ink-soft); margin-right: 4px; }
+.work-item h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+.work-item .work-desc { color: var(--ink-soft); font-size: 15px; margin-bottom: var(--space-sm); }
+.work-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.work-tags span {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+  border: 0.5px solid var(--line-strong);
+  border-radius: 20px;
+  padding: 4px 12px;
+}
